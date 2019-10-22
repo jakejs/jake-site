@@ -1,3 +1,7 @@
+.docs-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
 .theme-bg-dark {
   background: #8f3d3d;
 }
