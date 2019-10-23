@@ -66,15 +66,12 @@
             </div>
         <nav id="docs-nav" class="docs-nav navbar">
           <ul class="section-items list-unstyled nav flex-column pb-3">
-            <li class="nav-item section-title"><a class="nav-link scrollto active" href="#section-1"><span class="theme-icon-holder mr-2"><i class="fas fa-map-signs"></i></span>Overview</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-1-1">Installation</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-1-2">Section Item 1.2</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-1-3">Section Item 1.3</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-1-4">Section Item 1.4</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-1-5">Section Item 1.5</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-1-6">Section Item 1.6</a></li>
-            <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-2"><span class="theme-icon-holder mr-2"><i class="fas fa-arrow-down"></i></span>Installation</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-2-1">Section Item 2.1</a></li>
+            <li class="nav-item section-title"><a class="nav-link scrollto active" href="#section-overview"><span class="theme-icon-holder mr-2"><i class="fas fa-map-signs"></i></span>Overview</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-overview-installation">Installation</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-overview-basic-usage">Basic Usage</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-overview-jakefiles">Jakefiles</a></li>
+            <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-tasks"><span class="theme-icon-holder mr-2"><i class="fas fa-check"></i></span>Tasks</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-tasks-original-api">Original API</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-2-2">Section Item 2.2</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-2-3">Section Item 2.3</a></li>
             <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-3"><span class="theme-icon-holder mr-2"><i class="fas fa-box"></i></span>APIs</a></li>
@@ -111,7 +108,7 @@
       </div><!--//docs-sidebar-->
       <div class="docs-content">
         <div class="container">
-          <article class="docs-article" id="section-1">
+          <article class="docs-article" id="section-overview">
             <header class="docs-header">
               <h1 class="docs-heading">Overview</h1>
               <section class="docs-intro">
@@ -136,7 +133,7 @@
 
 
             </header>
-            <section class="docs-section" id="item-1-1">
+            <section class="docs-section" id="item-overview-installation">
             <h2 class="section-heading">Installation</h2>
             <p>
               Jake is primarily a CLI tool. If you want to install it globally, install it
@@ -198,37 +195,229 @@
 
           </section><!--//section-->
 
-          <section class="docs-section" id="item-1-2">
-            <h2 class="section-heading">Section Item 1.2</h2>
+          <section class="docs-section" id="item-overview-basic-usage">
+            <h2 class="section-heading">Basic Usage</h2>
+
+          <p>Run Jake from the command line, like so:</p>
+
+          <p>
+          <pre><code class="shell hljs">$ jake [options ...] [env variables ...] target</code></pre>
+          </p>
+
+          <p>Jake accepts the following options:</p>
+
+          <div class="table-responsive my-4">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th class="theme-bg-light">
+                    -f
+                    <span class="faded">/</span>
+                    --jakefile
+                    <span class="faded">FILE</span>
+                  </th>
+                  <td>
+                    Use FILE as the Jakefile.
+                  </td>
+                </tr>
+                <tr>
+                  <th class="theme-bg-light">
+                    -C
+                    <span class="faded">/</span>
+                    --directory
+                    <span class="faded">DIRECTORY</span>
+                  </th>
+                  <td>
+                    Change to DIRECTORY before running tasks.
+                  </td>
+                </tr>
+                <tr>
+                  <th class="theme-bg-light">
+                    -q
+                    <span class="faded">/</span>
+                    --quiet
+                  </th>
+                  <td>
+                    Do not log built-in Jake messages to standard output.
+                  </td>
+                </tr>
+                <tr>
+                  <th class="theme-bg-light">
+                    -B
+                    <span class="faded">/</span>
+                    --always-make
+                  </th>
+                  <td>
+                    Unconditionally make all targets.
+                  </td>
+                </tr>
+                <tr>
+                  <th class="theme-bg-light">
+                    -T
+                    <span class="faded">/</span>
+                    -ls
+                    <span class="faded">/</span>
+                    --tasks
+                  </th>
+                  <td>
+                    Display the tasks (matching optional PATTERN) with descriptions, then exit.
+                  </td>
+                </tr>
+                <tr>
+                  <th class="theme-bg-light">
+                    -J
+                    <span class="faded">/</span>
+                    --jakelibdir
+                    <span class="faded">JAKELIBDIR</span>
+                  </th>
+                  <td>
+                    Auto-import any .jake files in JAKELIBDIR (default is 'jakelib').
+                  </td>
+                </tr>
+                <tr>
+                  <th class="theme-bg-light">
+                    -t
+                    <span class="faded">/</span>
+                    --trace
+                  </th>
+                  <td>
+                    Enable full backtrace.
+                  </td>
+                </tr>
+                <tr>
+                  <th class="theme-bg-light">
+                    -h
+                    <span class="faded">/</span>
+                    --help
+                  </th>
+                  <td>
+                    Display this help message.
+                  </td>
+                </tr>
+                <tr>
+                  <th class="theme-bg-light">
+                    -V
+                    <span class="faded">/</span>
+                    -v
+                    <span class="faded">/</span>
+                    --version
+                  </th>
+                  <td>
+                    Display the Jake version.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div><!--//table-responsive-->
+
           </section><!--//section-->
 
-          <section class="docs-section" id="item-1-3">
-            <h2 class="section-heading">Section Item 1.3</h2>
-          </section><!--//section-->
+          <section class="docs-section" id="item-overview-jakefiles">
+            <h2 class="section-heading">Jakefiles</h2>
 
-          <section class="docs-section" id="item-1-4">
-            <h2 class="section-heading">Section Item 1.4</h2>
+            <p>
+              Tasks for Jake to run are defined in Jakefiles. A Jakefile is
+              just executable JavaScript. You can include whatever JavaScript you
+              want in it.
+            </p>
 
-          </section><!--//section-->
-          <section class="docs-section" id="item-1-5">
-            <h2 class="section-heading">Section Item 1.5</h2>
-          </section><!--//section-->
-          <section class="docs-section" id="item-1-6">
-            <h2 class="section-heading">Section Item 1.6</h2>
+            <p>
+              When you run Jake, it will look for a Jakefile in the current
+              diretory. Jake will recognize <code>Jakefile</code>,
+              <code>Jakefile.js</code>, <code>jakefile</code>, or
+              <code>jakefile.js</code> as a vaild name for a Jakefile.
+            </p>
+
+            <p>
+              If it doesn't find a Jakefile in the current directory, it will
+              look its parent directory, and that one's parent directory,
+              recursively, until it hits the root of the filesystem. (If it
+              hasn't found a Jakefile then, it errors out.)
+            </p>
           </section><!--//section-->
 
           </article>
 
-          <article class="docs-article" id="section-2">
+          <article class="docs-article" id="section-tasks">
             <header class="docs-header">
-              <h1 class="docs-heading">Installation</h1>
+              <h1 class="docs-heading">Tasks</h1>
               <section class="docs-intro">
-                <p>Section intro goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque finibus condimentum nisl id vulputate. Praesent aliquet varius eros interdum suscipit. Donec eu purus sed nibh convallis bibendum quis vitae turpis. Duis vestibulum diam lorem, vitae dapibus nibh facilisis a. Fusce in malesuada odio.</p>
-            </section><!--//docs-intro-->
+                <p>
+                  <strong>Tasks</strong> are the basic building block of
+                  execution for Jake-based build processes. Tasks can have other
+                  tasks as <strong>prerequities</strong>, meaning those tasks
+                  have to run before the current task can run.
+                </p>
+                <p>
+                  Jake is smart enough to know if particular prerequisites have
+                  already been run, so it doesn't run the same task twice.
+                  (There is an API for reenabling tasks, so you can run them
+                  multiple times if you need to.)
+                </p>
+                <p>
+                  There are two APIs for defining tasks: the <strong>original
+                  API</strong>, which uses a call to a top-level
+                  <code>task</code> function to define one, and a <strong>newer
+                  API</strong> which relies simply on exported functions to
+                  define tasks.
+                </p>
+	    </section><!--//docs-intro-->
+
             </header>
-             <section class="docs-section" id="item-2-1">
-            <h2 class="section-heading">Section Item 2.1</h2>
-            <p>Vivamus efficitur fringilla ullamcorper. Cras condimentum condimentum mauris, vitae facilisis leo. Aliquam sagittis purus nisi, at commodo augue convallis id. Sed interdum turpis quis felis bibendum imperdiet. Mauris pellentesque urna eu leo gravida iaculis. In fringilla odio in felis ultricies porttitor. Donec at purus libero. Vestibulum libero orci, commodo nec arcu sit amet, commodo sollicitudin est. Vestibulum ultricies malesuada tempor.</p>
+             <section class="docs-section" id="item-tasks-original-api">
+            <h2 class="section-heading">Original API</h2>
+
+            <h5>The <code>task</code> function</h5>
+
+            <p>
+              The top-level <code>task</code> function defines tasks. It has one
+              required argument, the task-name, and two optional arguments:
+            </p>
+
+            <p>
+              <pre><code class="javascript hljs">task(name, [prerequisites], [action]);</code></pre>
+            </p>
+
+            <p>
+              The <code>name</code> argument is a String defining the name of the
+              task, and <code>prerequisites</code> is an optional Array arg of the
+              list of prerequisite tasks (i.e., their names as Strings) to perform first.
+            </p>
+
+            <p>
+              The <code>action</code> is a Function defining the action to take
+              for the task. The action is invoked with the Task
+              object itself as the execution context (i.e, <code>this</code> inside
+              the action function references the Task object).
+            </p>
+
+            <h5>The <code>desc</code> function</h5>
+
+            <p>
+              Use <code>desc</code> to add a string description of the task. If
+              you add a description in this way, the task will be visible when
+              you run <code>jake -T</code>. Any tasks that have no description
+              will be considered private, and won't be displayed in the list of
+              tasks with the <code>-T</code> flag (or its alias
+              <code>-ls</code>).
+            </p>
+
+            <h5>Examples</h5>
+
+
+            <pre><code class="javascript hljs">desc('This is the default task.');
+task('default', function (params) {
+  console.log('This is the default task.');
+});
+
+desc('This task has prerequisites.');
+task('hasPrereqs', ['foo', 'bar', 'baz'], function (params) {
+  console.log('Ran some prereqs first.');
+});</code></pre>
+
+[should mention async funcs / Promises here]
+
+
           </section><!--//section-->
 
           <section class="docs-section" id="item-2-2">

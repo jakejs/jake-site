@@ -102,4 +102,12 @@ code {
   top: 130px;
   border-radius: 50%;
 }
-
+.faded {
+  color: #777;
+  display: inline-block;
+  margin: 0 4px;
+}
+th.theme-bg-light {
+  white-space: nowrap;
+  background: #fcf4eb;
+}
