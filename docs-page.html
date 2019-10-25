@@ -565,7 +565,7 @@ exports.build = series(clean, lint, _build);</code></pre>
 	            </p>
 
               <p>
-                <pre><code class="lang-javascript">let { file, desc } = require('jake');
+                <pre><code class="javascript hljs">let { file, desc } = require('jake');
 
 desc('This builds a compiled JS file for production.');
 file('foo-production.js', ['bar', 'foo-bar.js', 'foo-baz.js'], function () {
@@ -588,7 +588,7 @@ file('foo-production.js', ['bar', 'foo-bar.js', 'foo-baz.js'], function () {
               </p>
 
               <p>
-              <pre><code class="lang-javascript">desc('This task creates creates a directory named "bar"');
+              <pre><code class="javascript hljs">desc('This task creates creates a directory named "bar"');
 directory('bar');</code></pre>
               </p>
 
@@ -601,12 +601,49 @@ directory('bar');</code></pre>
 
           <section class="docs-section" id="item-api-namespaces">
             <h2 class="section-heading">Namespaces</h2>
+            <p>
+	            Use <code><span class="keyword">namespace</span></code> to create
+              a namespace of tasks to perform. Call it with two arguments:
+	          </p>
+
+            <p>
+              <pre><code class="javascript hljs">namespace(name, namespaceTasks);</code></pre>
+            </p>
+
+            <p>
+              Where <code>name</code> is the name of the namespace, and
+              <code>namespaceTasks</code> is a function with calls inside it to
+              <code>task</code> or <code>desc</code> defining all the tasks for that
+              namespace.
+            </p>
+
+            <p>Here's an example: </p>
+
+            <p>
+              <pre><code class="javascript hljs">desc('This is the default task.');
+task('default', function () {
+  console.log('This is the default task.');
+});
+
+namespace('foo', function () {
+  desc('This the foo:bar task');
+  task('bar', function () {
+    console.log('doing foo:bar task');
+  });
+
+  desc('This the foo:baz task');
+  task('baz', ['default', 'foo:bar'], function () {
+    console.log('doing foo:baz task');
+  });
+});</code></pre>
+            </p>
+
+            <p>
+              In this example, the foo:baz task depends on the default and foo:bar
+              tasks.
+            </p>
 
           </section><!--//section-->
-
-
-
-
 
           </article><!--//docs-article-->
 
