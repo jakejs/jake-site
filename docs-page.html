@@ -80,6 +80,7 @@
             <li class="nav-item"><a class="nav-link scrollto" href="#item-api-file-tasks">File tasks</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-api-directory-tasks">Directory tasks</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-api-namespaces">Namespaces</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-api-rules">Rules</a></li>
             <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-3"><span class="theme-icon-holder mr-2"><i class="fas fa-box"></i></span>APIs</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-3-1">Section Item 3.1</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-3-2">Section Item 3.2</a></li>
@@ -641,6 +642,81 @@ namespace('foo', function () {
             <p>
               In this example, the foo:baz task depends on the default and foo:bar
               tasks.
+            </p>
+
+          </section><!--//section-->
+
+          <section class="docs-section" id="item-api-rules">
+            <h2 class="section-heading">Rules</h2>
+
+            <p>
+              When you add a filename as a prerequisite for a task, but there is
+              not a file-task defined for it, Jake can create file-tasks on the fly
+              from Rules.
+            </p>
+
+            <p>
+              Here's an example:
+            </p>
+
+            <p>
+              <pre><code class="javascript hljs">rule('.o', '.c', {async: true}, function () {
+  var cmd = 'cc ' + this.source + ' -c -o ' + this.name;
+  jake.exec(cmd, function () {
+    complete();
+  });
+});</code></pre>
+            </p>
+
+            <p>
+              This rule will take effect for any task-name that ends in '.o', but will
+              require the existence of a prerequisite source file with the same name ending
+              in '.c'.
+            </p>
+
+            <p>
+              For example, with this rule, if you reference a task 'foobarbaz.o' as a
+              prerequisite somewhere in one of your Jake tasks, rather than complaining about
+              this file not existing, or the lack of a task with that name, Jake will
+              automatically create a FileTask for 'foobarbaz.o' with the action specified in
+              the rule you've defined. (The usual action would be to create 'foobarbaz.o' from
+              'foobarbaz.c'). If 'foobarbaz.c' does not exist, it will recursively attempt
+              synthesize a viable rule for it as well.
+            </p>
+
+            <h3>Regex patterns</h3>
+
+            <p>
+              You can use regular expressions to match file extensions as well:
+            </p>
+
+            <p>
+              <pre><code class="javascript hljs">let exec = require('child_process').execSync;
+
+rule(/\.o$/, '.c', function () {
+  var cmd = 'cc ' + this.source + ' -c -o ' + this.name;
+  exec(cmd);
+});</code></pre>
+            </p>
+
+            <h3>Source files from functions</h3>
+
+            <p>
+              You can also use a function to calculate the name of the desired source file to
+              use, instead of assuming simple suffix substitution:
+            </p>
+
+            <p>
+              <pre><code class="javascript hljs">// Match .less.css or .scss.css and run appropriate preprocessor
+var getSourceFilename = function (name) {
+  // Strip off the extension for the filename
+  return name.replace(/\.css$/, '');
+};
+
+rule(/\.\w{2,4}\.css$/, getSourceFilename, {async: true}, function () {
+  // Get appropriate preprocessor for this.source, e.g., foo.less
+  // Generate a file with filename of this.name, e.g., foo.less.css
+});</code></pre>
             </p>
 
           </section><!--//section-->
