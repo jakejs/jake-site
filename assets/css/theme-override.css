@@ -111,3 +111,11 @@ th.theme-bg-light {
   white-space: nowrap;
   background: #fcf4eb;
 }
+.callout-icon-holder {
+  font-size: 20px;
+  margin: auto;
+}
+.callout-title {
+  line-height: 1.8rem;
+  margin-bottom: 4px;
+}

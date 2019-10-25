@@ -68,12 +68,18 @@
           <ul class="section-items list-unstyled nav flex-column pb-3">
             <li class="nav-item section-title"><a class="nav-link scrollto active" href="#section-overview"><span class="theme-icon-holder mr-2"><i class="fas fa-map-signs"></i></span>Overview</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-overview-installation">Installation</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-overview-basic-usage">Basic Usage</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-overview-basic-usage">Basic usage</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-overview-jakefiles">Jakefiles</a></li>
-            <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-tasks"><span class="theme-icon-holder mr-2"><i class="fas fa-check"></i></span>Tasks</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-tasks-original-api">Original API</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-2-2">Section Item 2.2</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-2-3">Section Item 2.3</a></li>
+            <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-api"><span class="theme-icon-holder mr-2"><i class="fas fa-box"></i></span>API</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-api-tasks">Tasks</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-api-task-method">The <code>task</code> method</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-api-desc-method">The <code>desc</code> method</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-api-basic-examples">Basic examples</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-api-exported-function-tasks">Exported function tasks</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-api-series-method">The <code>series</code> method</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-api-file-tasks">File tasks</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-api-directory-tasks">Directory tasks</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-api-namespaces">Namespaces</a></li>
             <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-3"><span class="theme-icon-holder mr-2"><i class="fas fa-box"></i></span>APIs</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-3-1">Section Item 3.1</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-3-2">Section Item 3.2</a></li>
@@ -151,7 +157,7 @@
                     <span class="callout-icon-holder mr-1">
                       <i class="fas fa-bullhorn"></i>
                   </span><!--//icon-holder-->
-                    Warning
+                  Sudo Make Me a Sandwich
                 </h4>
                   <p>
                   Don't ever do an <code>npm install</code> locally with
@@ -181,7 +187,7 @@
                   <span class="callout-icon-holder mr-1">
                     <i class="fas fa-info-circle"></i>
                 </span><!--//icon-holder-->
-                  Note
+                Embedded Jake
               </h4>
               <p>
                 Jake is mainly meant to be used as a CLI tool, but you can also
@@ -192,11 +198,10 @@
             </div><!--//content-->
           </div><!--//callout-block-->
 
-
           </section><!--//section-->
 
           <section class="docs-section" id="item-overview-basic-usage">
-            <h2 class="section-heading">Basic Usage</h2>
+            <h2 class="section-heading">Basic usage</h2>
 
           <p>Run Jake from the command line, like so:</p>
 
@@ -338,10 +343,25 @@
 
           </article>
 
-          <article class="docs-article" id="section-tasks">
+          <article class="docs-article" id="section-api">
             <header class="docs-header">
-              <h1 class="docs-heading">Tasks</h1>
+              <h1 class="docs-heading">API</h1>
               <section class="docs-intro">
+                <p>
+                  There are two APIs for defining tasks: the <strong>original
+                  API</strong>, which uses a call to a
+                  <code>task</code> method to define one, and a <strong>newer,
+                  experimental API</strong> which relies simply on exported functions to
+                  define tasks — but the basic building block of both APIs is the Task.
+                </p>
+
+
+	    </section><!--//docs-intro-->
+
+            </header>
+
+             <section class="docs-section" id="item-api-tasks">
+            <h2 class="section-heading">Tasks</h2>
                 <p>
                   <strong>Tasks</strong> are the basic building block of
                   execution for Jake-based build processes. Tasks can have other
@@ -354,24 +374,15 @@
                   (There is an API for reenabling tasks, so you can run them
                   multiple times if you need to.)
                 </p>
-                <p>
-                  There are two APIs for defining tasks: the <strong>original
-                  API</strong>, which uses a call to a top-level
-                  <code>task</code> function to define one, and a <strong>newer
-                  API</strong> which relies simply on exported functions to
-                  define tasks.
-                </p>
-	    </section><!--//docs-intro-->
 
-            </header>
-             <section class="docs-section" id="item-tasks-original-api">
-            <h2 class="section-heading">Original API</h2>
+          </section><!--//section-->
 
-            <h5>The <code>task</code> function</h5>
+          <section class="docs-section" id="item-api-task-method">
+            <h2 class="section-heading">The <code>task</code> method</h2>
 
             <p>
-              The top-level <code>task</code> function defines tasks. It has one
-              required argument, the task-name, and two optional arguments:
+              The <code>task</code> method defines tasks. It has one
+              required argument, the task name, and two optional arguments.
             </p>
 
             <p>
@@ -380,8 +391,10 @@
 
             <p>
               The <code>name</code> argument is a String defining the name of the
-              task, and <code>prerequisites</code> is an optional Array arg of the
-              list of prerequisite tasks (i.e., their names as Strings) to perform first.
+              task, and <code>prerequisites</code> is an optional Array of the
+              list of prerequisite tasks (i.e., their names as Strings) to run first.
+              (For example, you may decide to make the "clean" and "lint" tasks
+              prerequisites of the "build" task.)
             </p>
 
             <p>
@@ -391,44 +404,210 @@
               the action function references the Task object).
             </p>
 
-            <h5>The <code>desc</code> function</h5>
+            <div class="callout-block callout-block-info">
+            <div class="content">
+                <h4 class="callout-title">
+                  <span class="callout-icon-holder mr-1">
+                    <i class="fas fa-info-circle"></i>
+                </span><!--//icon-holder-->
+                  Async Functions as Actions
+              </h4>
+              <p>
+                As you'll see in the example below, Jake handles actions that are async
+                functions (or any that return a Promise) without doing anything special.
+                It will correctly wait until the async function or
+                Promise resolves, before marking the task as complete, and moving to the
+                next.
+              </p>
+            </div><!--//content-->
+          </div><!--//callout-block-->
+
+          <p>
+            A Task is also an EventEmitter which emits the 'start' event when it
+            begins to run, and the 'complete' event when it is finished.
+          </p>
+
+          <p>
+            This is one way to allow asynchronous task actions to be run from
+            within other tasks via either <code>invoke</code> or
+            <code>execute</code>, and ensures they will complete before the rest
+            of the containing task executes. See the section &quot;Running tasks
+            from within other tasks,&quot; below.
+          </p>
+
+          </section><!--//section-->
+
+          <section class="docs-section" id="item-api-desc-method">
+            <h2 class="section-heading">The <code>desc</code> method</h2>
 
             <p>
               Use <code>desc</code> to add a string description of the task. If
-              you add a description in this way, the task will be visible when
+              you add this description, the task will be visible when
               you run <code>jake -T</code>. Any tasks that have no description
               will be considered private, and won't be displayed in the list of
               tasks with the <code>-T</code> flag (or its alias
               <code>-ls</code>).
             </p>
 
-            <h5>Examples</h5>
+          </section><!--//section-->
 
+          <section class="docs-section" id="item-api-basic-examples">
+            <h2 class="section-heading">Basic examples</h2>
 
-            <pre><code class="javascript hljs">desc('This is the default task.');
-task('default', function (params) {
+            <pre><code class="javascript hljs">let { task, desc } = require('jake');
+
+desc('This is the default task.');
+task('default', function () {
   console.log('This is the default task.');
+  console.log('Jake will run this task if you run `jake` with no task specified.');
 });
 
-desc('This task has prerequisites.');
-task('hasPrereqs', ['foo', 'bar', 'baz'], function (params) {
-  console.log('Ran some prereqs first.');
+desc('This async task has prerequisites.');
+task('hasPrereqs', ['foo', 'bar', 'baz'], async function () {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      console.log('Ran some prereqs first.');
+      resolve();
+    }, 2000);
+  });
 });</code></pre>
 
-[should mention async funcs / Promises here]
+          </section><!--//section-->
 
+          <section class="docs-section" id="item-api-exported-function-tasks">
+            <h2 class="section-heading">Exported function tasks (experimental)</h2>
+
+            <p>
+              Jake also supports a <strong>newer</strong>, experimental API that
+              will create tasks implicitly from any functions you export from
+              your Jakefile. The name of the task will be the key you export the
+              function with.
+            </p>
+
+            <p>
+              For example, with the following Jakefile:
+            </p>
+
+            <pre><code class="javascript hljs">function foo() {}
+async function bar() {}
+
+exports.foo = foo;
+exports.bar = bar</code></pre>
+
+          <p>
+            Running <code>jake -T</code> wiil yield the following output:
+          </p>
+
+          <p>
+            <pre><code class="shell hljs">$ jake -T
+jake foo (Exported function task)
+jake bar (Exported function task)</code></pre>
+          </p>
+          </section><!--//section-->
+
+          <section class="docs-section" id="item-api-series-method">
+            <h2 class="section-heading">The <code>series</code> method (experimental)</h2>
+
+            <p>
+              The series method allows you to chain together Jake tasks into
+              single, larger tasks (similar to providing task prerequisites,
+              with the original API).
+            </p>
+
+            <p>
+              This approach allows you to compose larger, more complex tasks
+              from smaller, simpler ones, and could be considered an example of
+              recursive <a
+              href="https://en.wikipedia.org/wiki/Object_composition">composition</a>.
+            </p>
+
+            <p>
+              Use the <code>series</code> method like this:
+            </p>
+
+            <pre><code class="javascript hljs">let { series } = require('jake');
+
+function clean() {
+  // Do pre-build cleanup here
+};
+async function lint() {
+  // Shell out, do some linting
+}
+
+async function _build() {
+  // This is only used internally -- always clean and lint
+  // before building
+}
+
+exports.clean = clean;
+exports.lint = lint;
+exports.build = series(clean, lint, _build);</code></pre>
 
           </section><!--//section-->
 
-          <section class="docs-section" id="item-2-2">
-            <h2 class="section-heading">Section Item 2.2</h2>
-            <p>Vivamus efficitur fringilla ullamcorper. Cras condimentum condimentum mauris, vitae facilisis leo. Aliquam sagittis purus nisi, at commodo augue convallis id. Sed interdum turpis quis felis bibendum imperdiet. Mauris pellentesque urna eu leo gravida iaculis. In fringilla odio in felis ultricies porttitor. Donec at purus libero. Vestibulum libero orci, commodo nec arcu sit amet, commodo sollicitudin est. Vestibulum ultricies malesuada tempor.</p>
+          <section class="docs-section" id="item-api-file-tasks">
+            <h2 class="section-heading">File tasks</h2>
+              <p>
+                Create a file task by using the <code>file</code> method.
+              </p>
+
+              <p>
+                File tasks create a file from one or more other files. With a
+                file task, Jake will run the specified action if the file does
+                not exist yet, or if it is older than the files specified by
+                any prerequisite file tasks. File tasks are particularly useful for
+                compiling something from a tree of source files.
+              </p>
+
+              <p>
+                You can also use ordinary tasks (or directory tasks, below) as
+                prereqs for file tasks.
+	            </p>
+
+              <p>
+                <pre><code class="lang-javascript">let { file, desc } = require('jake');
+
+desc('This builds a compiled JS file for production.');
+file('foo-production.js', ['bar', 'foo-bar.js', 'foo-baz.js'], function () {
+  // Code to concat and compile goes here
+});</code></pre>
+              </p>
+
           </section><!--//section-->
 
-          <section class="docs-section" id="item-2-3">
-            <h2 class="section-heading">Section Item 2.3</h2>
-            <p>Vivamus efficitur fringilla ullamcorper. Cras condimentum condimentum mauris, vitae facilisis leo. Aliquam sagittis purus nisi, at commodo augue convallis id. Sed interdum turpis quis felis bibendum imperdiet. Mauris pellentesque urna eu leo gravida iaculis. In fringilla odio in felis ultricies porttitor. Donec at purus libero. Vestibulum libero orci, commodo nec arcu sit amet, commodo sollicitudin est. Vestibulum ultricies malesuada tempor.</p>
+          <section class="docs-section" id="item-api-directory-tasks">
+            <h2 class="section-heading">Directory tasks</h2>
+              <p>
+                Create a directory task by using the <code>directory</code> method.
+              </p>
+
+              <p>
+                Directory-tasks create a directory for use with for file tasks.
+                Jake checks for he existence of the directory, and only creates
+                it if needed.
+              </p>
+
+              <p>
+              <pre><code class="lang-javascript">desc('This task creates creates a directory named "bar"');
+directory('bar');</code></pre>
+              </p>
+
+              <p>
+                A directory task can be used as a prerequisite for a
+                file task, or when run from the command line.
+	            </p>
+
           </section><!--//section-->
+
+          <section class="docs-section" id="item-api-namespaces">
+            <h2 class="section-heading">Namespaces</h2>
+
+          </section><!--//section-->
+
+
+
+
+
           </article><!--//docs-article-->
 
 
