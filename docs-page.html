@@ -81,13 +81,9 @@
             <li class="nav-item"><a class="nav-link scrollto" href="#item-api-directory-tasks">Directory tasks</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-api-namespaces">Namespaces</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-api-rules">Rules</a></li>
-            <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-3"><span class="theme-icon-holder mr-2"><i class="fas fa-box"></i></span>APIs</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-3-1">Section Item 3.1</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-3-2">Section Item 3.2</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-3-3">Section Item 3.3</a></li>
-            <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-4"><span class="theme-icon-holder mr-2"><i class="fas fa-cogs"></i></span>Integrations</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-4-1">Section Item 4.1</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-4-2">Section Item 4.2</a></li>
+            <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-advanced-usage"><span class="theme-icon-holder mr-2"><i class="fas fa-cogs"></i></span>Advanced usage</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-advanced-usage-passing-parameters">Passing parameters</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-advanced-usage-programmatic-tasks">Programmatic tasks</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-4-3">Section Item 4.3</a></li>
             <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-5"><span class="theme-icon-holder mr-2"><i class="fas fa-tools"></i></span>Utilities</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-5-1">Section Item 5.1</a></li>
@@ -589,7 +585,9 @@ file('foo-production.js', ['bar', 'foo-bar.js', 'foo-baz.js'], function () {
               </p>
 
               <p>
-              <pre><code class="javascript hljs">desc('This task creates creates a directory named "bar"');
+              <pre><code class="javascript hljs">let {directory, desc } = require('jake');
+
+desc('This task creates creates a directory named "bar"');
 directory('bar');</code></pre>
               </p>
 
@@ -621,7 +619,9 @@ directory('bar');</code></pre>
             <p>Here's an example: </p>
 
             <p>
-              <pre><code class="javascript hljs">desc('This is the default task.');
+              <pre><code class="javascript hljs">let { namespace, task, desk } = require('jake');
+
+desc('This is the default task.');
 task('default', function () {
   console.log('This is the default task.');
 });
@@ -660,11 +660,12 @@ namespace('foo', function () {
             </p>
 
             <p>
-              <pre><code class="javascript hljs">rule('.o', '.c', {async: true}, function () {
+              <pre><code class="javascript hljs">let { rule } = require('jake');
+let exec = require('child_process').execSync;
+
+rule('.o', '.c', function () {
   var cmd = 'cc ' + this.source + ' -c -o ' + this.name;
-  jake.exec(cmd, function () {
-    complete();
-  });
+  exec(cmd);
 });</code></pre>
             </p>
 
@@ -691,7 +692,8 @@ namespace('foo', function () {
             </p>
 
             <p>
-              <pre><code class="javascript hljs">let exec = require('child_process').execSync;
+              <pre><code class="javascript hljs">let { rule } = require('jake');
+let exec = require('child_process').execSync;
 
 rule(/\.o$/, '.c', function () {
   var cmd = 'cc ' + this.source + ' -c -o ' + this.name;
@@ -707,7 +709,9 @@ rule(/\.o$/, '.c', function () {
             </p>
 
             <p>
-              <pre><code class="javascript hljs">// Match .less.css or .scss.css and run appropriate preprocessor
+              <pre><code class="javascript hljs">let { rule } = require('jake');
+
+// Match .less.css or .scss.css and run appropriate preprocessor
 var getSourceFilename = function (name) {
   // Strip off the extension for the filename
   return name.replace(/\.css$/, '');
@@ -723,45 +727,271 @@ rule(/\.\w{2,4}\.css$/, getSourceFilename, {async: true}, function () {
 
           </article><!--//docs-article-->
 
-
-          <article class="docs-article" id="section-3">
+          <article class="docs-article" id="section-advanced-usage">
             <header class="docs-header">
-              <h1 class="docs-heading">APIs</h1>
+              <h1 class="docs-heading">Advanced usage</h1>
               <section class="docs-intro">
                 <p>Section intro goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque finibus condimentum nisl id vulputate. Praesent aliquet varius eros interdum suscipit. Donec eu purus sed nibh convallis bibendum quis vitae turpis. Duis vestibulum diam lorem, vitae dapibus nibh facilisis a. Fusce in malesuada odio.</p>
             </section><!--//docs-intro-->
             </header>
-             <section class="docs-section" id="item-3-1">
-            <h2 class="section-heading">Section Item 3.1</h2>
-            <p>Vivamus efficitur fringilla ullamcorper. Cras condimentum condimentum mauris, vitae facilisis leo. Aliquam sagittis purus nisi, at commodo augue convallis id. Sed interdum turpis quis felis bibendum imperdiet. Mauris pellentesque urna eu leo gravida iaculis. In fringilla odio in felis ultricies porttitor. Donec at purus libero. Vestibulum libero orci, commodo nec arcu sit amet, commodo sollicitudin est. Vestibulum ultricies malesuada tempor.</p>
+             <section class="docs-section" id="item-advanced-usage-passing-parameters">
+            <h2 class="section-heading">Passing parameters</h2>
+
+            <p>
+              Parameters can be passed on the <code>jake</code> CLI in two ways:
+              <strong>task-specific arguments</strong>, and <strong>environment variables</strong>.
+            </p>
+
+            <h3 class="section-heading">Task arguments</h3>
+
+            <p>
+              To pass arguments to a Jake task, enclose them in square braces,
+              separated by commas, after the name of the task on the command-line. For
+              example, with the following Jakefile:
+            </p>
+
+            <p>
+<pre><code class="javascript hljs">let { task, desc } = require('jake');
+
+desc('This is an awesome task.');
+task('awesome', function (a, b, c) {
+  console.log(a, b, c);
+});</code></pre>
+            </p>
+
+            <p>
+              You could run <code>jake</code> like this:
+            </p>
+
+            <p>
+              <pre><code class="shell hljs">$ jake awesome[hoge,piyo,fuga]</code></pre>
+            </p>
+
+            <p>
+              And you'd get the following output:
+            </p>
+
+            <p>
+              <pre><code class="shell hljs">hoge piyo fuga</code></pre>
+            </p>
+
+            <p>
+              Note that you <em>cannot</em> uses spaces between the commas separating the parameters.
+            </p>
+
+            <div class="callout-block callout-block-info">
+            <div class="content">
+                <h4 class="callout-title">
+                  <span class="callout-icon-holder mr-1">
+                    <i class="fas fa-info-circle"></i>
+                </span><!--//icon-holder-->
+                For zsh users
+              </h4>
+              <p>
+                You will need to escape the brackets or wrap in single quotes
+                like this to pass parameters:
+              </p>
+
+              <p>
+                <pre><code class="shell hljs">$ jake 'awesome[foo,bar,baz]'</code></pre>
+              </p>
+
+              <p>
+                Another solution is to deactivate permanently file-globbing for the <code>jake</code>
+                command. You can do this by adding this line to your <code>.zshrc</code> file:
+              </p>
+
+              <p>
+                <pre><code>alias jake=&quot;noglob jake&quot;</code></pre>
+              </p>
+
+            </div><!--//content-->
+          </div><!--//callout-block-->
+
+            <h3 class="section-heading">Environment variables</h3>
+
+            <p>
+              Any parameters passed after the Jake task that contain an equals sign (=) will
+              be added to process.env.
+            </p>
+
+            <p>
+              With the following Jakefile:
+            </p>
+            <p>
+              <pre><code class="javascript hljs">let { task, desc } = require('jake');
+
+desc('This is an awesome task.');
+task('awesome', function (a, b, c) {
+  console.log(a, b, c);
+  console.log(process.env.qux, process.env.frang);
+});</code></pre>
+            </p>
+
+            <p>
+              You could run <code>jake</code> like this:
+            </p>
+
+            <p>
+              <pre><code>jake awesome[hoge,piyo,fuga] qux=zoobie frang=asdf</code></pre>
+            </p>
+
+            <p>
+              And you'd get the following output:
+            </p>
+
+            <p>
+            <pre><code>hoge piyo fuga
+zoobie asdf</code></pre>
+            </p>
+
+            <div class="callout-block callout-block-info">
+            <div class="content">
+                <h4 class="callout-title">
+                  <span class="callout-icon-holder mr-1">
+                    <i class="fas fa-info-circle"></i>
+                </span><!--//icon-holder-->
+                No args = default task
+              </h4>
+              <p>
+                Running the <code>jake</code> command with no arguments at all runs the default task.
+              </p>
+
+            </div><!--//content-->
+          </div><!--//callout-block-->
+
+
           </section><!--//section-->
 
-          <section class="docs-section" id="item-3-2">
-            <h2 class="section-heading">Section Item 3.2</h2>
-            <p>Vivamus efficitur fringilla ullamcorper. Cras condimentum condimentum mauris, vitae facilisis leo. Aliquam sagittis purus nisi, at commodo augue convallis id. Sed interdum turpis quis felis bibendum imperdiet. Mauris pellentesque urna eu leo gravida iaculis. In fringilla odio in felis ultricies porttitor. Donec at purus libero. Vestibulum libero orci, commodo nec arcu sit amet, commodo sollicitudin est. Vestibulum ultricies malesuada tempor.</p>
-          </section><!--//section-->
+          <section class="docs-section" id="item-advanced-usage-programmatic-tasks">
+            <h2 class="section-heading">Programmatic tasks</h2>
 
-          <section class="docs-section" id="item-3-3">
-            <h2 class="section-heading">Section Item 3.3</h2>
-            <p>Vivamus efficitur fringilla ullamcorper. Cras condimentum condimentum mauris, vitae facilisis leo. Aliquam sagittis purus nisi, at commodo augue convallis id. Sed interdum turpis quis felis bibendum imperdiet. Mauris pellentesque urna eu leo gravida iaculis. In fringilla odio in felis ultricies porttitor. Donec at purus libero. Vestibulum libero orci, commodo nec arcu sit amet, commodo sollicitudin est. Vestibulum ultricies malesuada tempor.</p>
-          </section><!--//section-->
-          </article><!--//docs-article-->
+          <p>
+            Jake supports the ability to run a task from within another task via the
+            <code>invoke</code> and <code>execute</code> methods.
+          </p>
 
-          <article class="docs-article" id="section-4">
-            <header class="docs-header">
-              <h1 class="docs-heading">Intergrations</h1>
-              <section class="docs-intro">
-                <p>Section intro goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque finibus condimentum nisl id vulputate. Praesent aliquet varius eros interdum suscipit. Donec eu purus sed nibh convallis bibendum quis vitae turpis. Duis vestibulum diam lorem, vitae dapibus nibh facilisis a. Fusce in malesuada odio.</p>
-            </section><!--//docs-intro-->
-            </header>
-             <section class="docs-section" id="item-4-1">
-            <h2 class="section-heading">Section Item 4.1</h2>
-            <p>Vivamus efficitur fringilla ullamcorper. Cras condimentum condimentum mauris, vitae facilisis leo. Aliquam sagittis purus nisi, at commodo augue convallis id. Sed interdum turpis quis felis bibendum imperdiet. Mauris pellentesque urna eu leo gravida iaculis. In fringilla odio in felis ultricies porttitor. Donec at purus libero. Vestibulum libero orci, commodo nec arcu sit amet, commodo sollicitudin est. Vestibulum ultricies malesuada tempor.</p>
-          </section><!--//section-->
+          <p>
+            The <code>invoke</code> method will run the desired task, along with its prerequisites:
+          </p>
 
-          <section class="docs-section" id="item-4-2">
-            <h2 class="section-heading">Section Item 4.2</h2>
-            <p>Vivamus efficitur fringilla ullamcorper. Cras condimentum condimentum mauris, vitae facilisis leo. Aliquam sagittis purus nisi, at commodo augue convallis id. Sed interdum turpis quis felis bibendum imperdiet. Mauris pellentesque urna eu leo gravida iaculis. In fringilla odio in felis ultricies porttitor. Donec at purus libero. Vestibulum libero orci, commodo nec arcu sit amet, commodo sollicitudin est. Vestibulum ultricies malesuada tempor.</p>
+          <p>
+            <pre><code class="javascript hljs">let { task, desc, Task } = require('jake');
+
+desc('Calls the foo:bar task and its prerequisites.');
+task('invokeFooBar', function () {
+  // Calls foo:bar and its prereqs
+  Task['foo:bar'].invoke();
+});</code></pre>
+          </p>
+
+
+          <p>
+            The <code>invoke</code> method will only run the task once, even if you call it repeatedly.
+          </p>
+
+          <p>
+            <pre><code class="javascript hljs">let { task, desc, Task } = require('jake');
+
+desc('Calls the foo:bar task and its prerequisites.');
+task('invokeFooBarOnce', function () {
+  let t = Task['foo:bar'];
+  // Calls foo:bar and its prereqs
+  t.invoke();
+  // No-op
+  t.invoke();
+});</code></pre>
+          </p>
+
+          <p>
+            The <code>execute</code> method runs the desired task without its prerequisites:
+          </p>
+
+          <p>
+            <pre><code class="javascript hljs">let { task, desc, Task } = require('jake');
+
+desc('Calls the foo:bar task without its prerequisites.');
+task('executeFooBar', function () {
+  // Calls foo:bar without its prereqs
+  Task['foo:baz'].execute();
+});</code></pre>
+          </p>
+
+          <p>
+            Calling <code>execute</code> repeatedly <strong>will</strong> run the desired
+            task repeatedly.
+          </p>
+
+          <p>
+            <pre><code class="javascript hljs">let { task, desc, Task } = require('jake');
+
+desc('Calls the foo:bar task without its prerequisites.');
+task('executeFooBarRepeatedly', function () {
+  // Calls foo:bar without its prereqs
+  let t = Task['foo:bar'];
+  t.execute();
+  // Can keep running this over and over
+  t.execute();
+  t.execute();
+});</code></pre>
+          </p>
+
+          <p>
+            If you want to run the task and its prerequisites more than once, you can use
+            <code>invoke</code> with the <code>reenable</code> method.
+          </p>
+
+          <p>
+            <pre><code class="javascript hljs">let { task, desc, Task } = require('jake');
+
+desc('Calls the foo:bar task and its prerequisites.');
+  task('invokeFooBar', function () {
+  let t = Task['foo:bar'];
+  // Calls foo:bar and its prereqs
+  t.invoke();
+  // Does nothing
+  t.invoke();
+  // Only re-runs foo:bar, but not its prerequisites
+  t.reenable();
+  t.invoke();
+});</code></pre>
+          </p>
+
+          <p>
+            The <code>reenable</code> method takes a single Boolean arg, a 'deep' flag, which reenables
+            the task's prerequisites if set to true.
+          </p>
+
+          <p>
+            <pre><code class="javascript hljs">let { task, desc, Task } = require('jake');
+
+desc('Calls the foo:bar task and its prerequisites.');
+task('invokeFooBar', function () {
+  let t = Task['foo:bar'];
+  // Calls foo:bar and its prereqs
+  t.invoke();
+  // Does nothing
+  t.invoke();
+  // Re-runs foo:bar and all of its prerequisites
+  t.reenable(true);
+  t.invoke();
+});</code></pre>
+          </p>
+
+          <p>
+            It's easy to pass params on to a sub-task run via <code>invoke</code> or <code>execute</code>:
+          </p>
+
+          <p>
+            <pre><code class="javascript hljs">let { task, desc, Task } = require('jake');
+
+desc('Passes params on to other tasks.');
+task('passParams', function (...args) {
+  // Calls foo:bar, passing along current args
+  Task['foo:bar'].invoke(...args);
+});</code></pre>
+          </p>
+
           </section><!--//section-->
 
           <section class="docs-section" id="item-4-3">
