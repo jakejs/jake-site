@@ -39,6 +39,7 @@
               <div class="docs-top-utilities d-flex justify-content-end align-items-center">
 
                 <ul class="social-list list-inline mx-md-3 mx-lg-5 mb-0 d-none d-lg-flex">
+                  <li class="list-inline-item"><a href="docs-page.html"><i class="fas fa-edit fa-fw"></i></a></li>
                   <li class="list-inline-item"><a href="https://github.com/jakejs/jake"><i class="fab fa-github fa-fw"></i></a></li>
                   <li class="list-inline-item"><a href="https://www.npmjs.com/package/jake"><i class="fab fa-npm fa-fw"></i></a></li>
                   <li class="list-inline-item"><a href="https://twitter.com/mde"><i class="fab fa-twitter fa-fw"></i></a></li>
@@ -103,14 +104,16 @@
                 <div class="card-body">
                   <h5 class="card-title mb-3">
                     <span class="theme-icon-holder card-icon-holder mr-2">
-                        <i class="fas fa-box fa-fw"></i>
+                        <i class="fas fa-file-code fa-fw"></i>
                       </span><!--//card-icon-holder-->
-                      <span class="card-title-text">APIs</span>
+                      <span class="card-title-text">Jakefiles</span>
                   </h5>
                   <div class="card-text">
-                    Section overview goes here. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet.
+                    Tasks for Jake to run are defined in Jakefiles. A Jakefile
+                    is just executable JavaScript. You can include whatever
+                    JavaScript you want in it.
                 </div>
-                  <a class="card-link-mask" href="docs-page.html#section-3"></a>
+                  <a class="card-link-mask" href="docs-page.html#item-overview-jakefiles"></a>
                 </div><!--//card-body-->
               </div><!--//card-->
             </div><!--//col-->
@@ -119,14 +122,89 @@
                 <div class="card-body">
                   <h5 class="card-title mb-3">
                     <span class="theme-icon-holder card-icon-holder mr-2">
-                        <i class="fas fa-cogs fa-fw"></i>
+                        <i class="fas fa-tasks fa-fw"></i>
                       </span><!--//card-icon-holder-->
-                      <span class="card-title-text">Integrations</span>
+                      <span class="card-title-text">Tasks</span>
                   </h5>
                   <div class="card-text">
-                    Section overview goes here. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet.
+                  Tasks are the basic building block of
+                  execution for Jake-based build processes. Tasks can have other
+                  tasks as prerequities, meaning those tasks
+                  have to run before the current task can run.
                 </div>
-                  <a class="card-link-mask" href="docs-page.html#section-4"></a>
+                  <a class="card-link-mask" href="docs-page.html#item-api-tasks"></a>
+                </div><!--//card-body-->
+              </div><!--//card-->
+            </div><!--//col-->
+            <div class="col-12 col-lg-4 py-3">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title mb-3">
+                    <span class="theme-icon-holder card-icon-holder mr-2">
+                        <i class="fas fa-project-diagram"></i>
+                      </span><!--//card-icon-holder-->
+                      <span class="card-title-text">Rules</span>
+                  </h5>
+                  <div class="card-text">
+                    When you add a filename as a prerequisite for a task, but there is
+                    not a file-task defined for it, Jake can create file-tasks on the fly
+                    from Rules.
+                </div>
+                  <a class="card-link-mask" href="docs-page.html#item-api-rules"></a>
+                </div><!--//card-body-->
+              </div><!--//card-->
+            </div><!--//col-->
+            <div class="col-12 col-lg-4 py-3">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title mb-3">
+                    <span class="theme-icon-holder card-icon-holder mr-2">
+                        <i class="fas fa-box-open"></i>
+                      </span><!--//card-icon-holder-->
+                      <span class="card-title-text">Namespaces</span>
+                  </h5>
+                  <div class="card-text">
+                    Tasks can be namespaced, which provides a flexible, powerful
+                    way to prevent name conflicts, or just provide some
+                    organization for your build.
+                  </div>
+                  <a class="card-link-mask" href="docs-page.html#item-api-namespaces"></a>
+                </div><!--//card-body-->
+              </div><!--//card-->
+            </div><!--//col-->
+            <div class="col-12 col-lg-4 py-3">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title mb-3">
+                    <span class="theme-icon-holder card-icon-holder mr-2">
+                        <i class="fas fa-code"></i>
+                      </span><!--//card-icon-holder-->
+                      <span class="card-title-text">Programmatic tasks</span>
+                  </h5>
+                  <div class="card-text">
+                    Jake supports the ability to run a task from within another task.  The
+                    <code>invoke</code> method will run the desired task, along with its
+                    prerequisites.
+                </div>
+                  <a class="card-link-mask" href="docs-page.html#item-advanced-usage-programmatic-tasks"></a>
+                </div><!--//card-body-->
+              </div><!--//card-->
+            </div><!--//col-->
+            <div class="col-12 col-lg-4 py-3">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title mb-3">
+                    <span class="theme-icon-holder card-icon-holder mr-2">
+                        <i class="fas fa-cogs"></i>
+                      </span><!--//card-icon-holder-->
+                      <span class="card-title-text">Modularizing</span>
+                  </h5>
+                  <div class="card-text">
+                    Jake will automatically look for files with a .js extension in a 'jakelib'
+                    directory in your project, and load them (using require) after loading your main
+                    Jakefile.
+                </div>
+                  <a class="card-link-mask" href="docs-page.html#item-advanced-usage-modularizing"></a>
                 </div><!--//card-body-->
               </div><!--//card-->
             </div><!--//col-->
@@ -137,76 +215,12 @@
                     <span class="theme-icon-holder card-icon-holder mr-2">
                         <i class="fas fa-tools"></i>
                       </span><!--//card-icon-holder-->
-                      <span class="card-title-text">Utilities</span>
+                      <span class="card-title-text">Utility tasks</span>
                   </h5>
                   <div class="card-text">
-                    Section overview goes here. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet.
-                </div>
-                  <a class="card-link-mask" href="docs-page.html#section-5"></a>
-                </div><!--//card-body-->
-              </div><!--//card-->
-            </div><!--//col-->
-            <div class="col-12 col-lg-4 py-3">
-              <div class="card shadow-sm">
-                <div class="card-body">
-                  <h5 class="card-title mb-3">
-                    <span class="theme-icon-holder card-icon-holder mr-2">
-                        <i class="fas fa-laptop-code"></i>
-                      </span><!--//card-icon-holder-->
-                      <span class="card-title-text">Web</span>
-                  </h5>
-                  <div class="card-text">
-                    Section overview goes here. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet.
-                </div>
-                  <a class="card-link-mask" href="docs-page.html#section-6"></a>
-                </div><!--//card-body-->
-              </div><!--//card-->
-            </div><!--//col-->
-            <div class="col-12 col-lg-4 py-3">
-              <div class="card shadow-sm">
-                <div class="card-body">
-                  <h5 class="card-title mb-3">
-                    <span class="theme-icon-holder card-icon-holder mr-2">
-                        <i class="fas fa-tablet-alt"></i>
-                      </span><!--//card-icon-holder-->
-                      <span class="card-title-text">Mobile</span>
-                  </h5>
-                  <div class="card-text">
-                    Section overview goes here. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet.
-                </div>
-                  <a class="card-link-mask" href="docs-page.html#section-7"></a>
-                </div><!--//card-body-->
-              </div><!--//card-->
-            </div><!--//col-->
-            <div class="col-12 col-lg-4 py-3">
-              <div class="card shadow-sm">
-                <div class="card-body">
-                  <h5 class="card-title mb-3">
-                    <span class="theme-icon-holder card-icon-holder mr-2">
-                        <i class="fas fa-book-reader"></i>
-                      </span><!--//card-icon-holder-->
-                      <span class="card-title-text">Resources</span>
-                  </h5>
-                  <div class="card-text">
-                    Section overview goes here. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet.
-                </div>
-                  <a class="card-link-mask" href="docs-page.html#section-8"></a>
-                </div><!--//card-body-->
-              </div><!--//card-->
-            </div><!--//col-->
-            <div class="col-12 col-lg-4 py-3">
-              <div class="card shadow-sm">
-                <div class="card-body">
-                  <h5 class="card-title mb-3">
-                    <span class="theme-icon-holder card-icon-holder mr-2">
-                        <i class="fas fa-lightbulb"></i>
-                      </span><!--//card-icon-holder-->
-                      <span class="card-title-text">FAQs</span>
-                  </h5>
-                  <div class="card-text">
-                    Section overview goes here. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet.
-                </div>
-                  <a class="card-link-mask" href="docs-page.html#section-9"></a>
+                    Jake ships with a number of built-in utility tasks that make the repetitive work of building and releasing easier.
+                  </div>
+                  <a class="card-link-mask" href="docs-page.html#section-utility-tasks"></a>
                 </div><!--//card-body-->
               </div><!--//card-->
             </div><!--//col-->
@@ -219,8 +233,10 @@
       <div class="theme-bg-shapes-right"></div>
       <div class="theme-bg-shapes-left"></div>
       <div class="container">
-        <h3 class="mb-2 text-white mb-3">Launch Your Software Project Like A Pro</h3>
-        <div class="section-intro text-white mb-3 single-col-max mx-auto">Want to launch your software project and start getting traction from your target users? Check out our premium <a class="text-white" href="https://themes.3rdwavemedia.com/bootstrap-templates/startup/coderpro-bootstrap-4-startup-template-for-software-projects/">Bootstrap 4 startup template CoderPro</a>! It has everything you need to promote your product.</div>
+        <h3 class="mb-2 text-white mb-3">Give Jake a try, let us know what you think</h3>
+        <div class="section-intro text-white mb-3 single-col-max mx-auto">
+          Jake is the original build tool for JavaScript. Give it a try — we think you'll like what you see.
+        </div>
         </div>
       </div>
     </section><!--//cta-section-->
@@ -232,13 +248,11 @@
       <div class="footer-bottom text-center py-5">
 
         <ul class="social-list list-unstyled pb-4 mb-0">
-          <li class="list-inline-item"><a href="#"><i class="fab fa-github fa-fw"></i></a></li>
-              <li class="list-inline-item"><a href="#"><i class="fab fa-twitter fa-fw"></i></a></li>
-              <li class="list-inline-item"><a href="#"><i class="fab fa-slack fa-fw"></i></a></li>
-              <li class="list-inline-item"><a href="#"><i class="fab fa-product-hunt fa-fw"></i></a></li>
-              <li class="list-inline-item"><a href="#"><i class="fab fa-facebook-f fa-fw"></i></a></li>
-              <li class="list-inline-item"><a href="#"><i class="fab fa-instagram fa-fw"></i></a></li>
-          </ul><!--//social-list-->
+          <li class="list-inline-item"><a href="docs-page.html"><i class="fas fa-edit fa-fw"></i></a></li>
+          <li class="list-inline-item"><a href="https://github.com/jakejs/jake"><i class="fab fa-github fa-fw"></i></a></li>
+          <li class="list-inline-item"><a href="https://www.npmjs.com/package/jake"><i class="fab fa-npm fa-fw"></i></a></li>
+          <li class="list-inline-item"><a href="https://twitter.com/mde"><i class="fab fa-twitter fa-fw"></i></a></li>
+        </ul><!--//social-list-->
 
           <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
             <small class="copyright">Designed with <i class="fas fa-heart" style="color: #fb866a;"></i> by <a class="theme-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
