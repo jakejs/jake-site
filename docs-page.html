@@ -69,11 +69,12 @@
             <li class="nav-item"><a class="nav-link scrollto" href="#item-overview-installation">Installation</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-overview-basic-usage">Basic usage</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-overview-jakefiles">Jakefiles</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-overview-showing-tasks">Showing tasks</a></li>
             <li class="nav-item section-title mt-3"><a class="nav-link scrollto" href="#section-api"><span class="theme-icon-holder mr-2"><i class="fas fa-box"></i></span>API</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-api-tasks">Tasks</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-api-task-method">The <code>task</code> method</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-api-desc-method">The <code>desc</code> method</a></li>
-            <li class="nav-item"><a class="nav-link scrollto" href="#item-api-basic-examples">Basic examples</a></li>
+            <li class="nav-item"><a class="nav-link scrollto" href="#item-api-task-examples">Task examples</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-api-exported-function-tasks">Exported function tasks</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-api-series-method">The <code>series</code> method</a></li>
             <li class="nav-item"><a class="nav-link scrollto" href="#item-api-file-tasks">File tasks</a></li>
@@ -303,6 +304,66 @@
               recursively, until it hits the root of the filesystem. (If it
               hasn't found a Jakefile then, it errors out.)
             </p>
+
+            <h3>Sample Jakefile</h3>
+
+            <p>
+              Here's an example of a very simple Jakefile:
+            </p>
+
+            <p>
+              <pre><code class="javascript hljs">let { task, desc } = require('jake');
+
+desc('This is the default task.');
+task('default', function () {
+  console.log('This is the default task.');
+  console.log('Jake will run this task if you run `jake` with no task specified.');
+});
+
+desc('This is some other task. It depends on the default task');
+task('otherTask', ['default'], function () {
+  console.log('Some other task');
+});</code></pre>
+          </p>
+
+          </section><!--//section-->
+
+          <section class="docs-section" id="item-overview-showing-tasks">
+            <h2 class="section-heading">Showing tasks</h2>
+
+            <p>
+              Passing <code>jake</code> the <code>-T</code> or
+              <code>--tasks</code> flag (or the alias <code>-ls</code>) will
+              display the full list of tasks available in a Jakefile, along with
+              their descriptions:
+            </p>
+
+            <p>
+              <pre><code class="shell hljs">$ jake -T
+jake default       # This is the default task.
+jake asdf          # This is the asdf task.
+jake concat.txt    # File task, concatenating two files together
+jake failure       # Failing task.
+jake lookup        # Jake task lookup by name.
+jake foo:bar       # This the foo:bar task
+jake foo:fonebone  # This the foo:fonebone task</code></pre>
+            </p>
+
+            <p>
+              Setting a value for -T/--tasks will filter the list by that value:
+            </p>
+
+            <p>
+              <pre><code>$ jake -T foo
+jake foo:bar       # This the foo:bar task
+jake foo:fonebone  # This the foo:fonebone task</code></pre>
+            </p>
+
+            <p>
+              The list displayed will be all tasks whose namespace/name contain
+              the filter string.
+            </p>
+
           </section><!--//section-->
 
           </article>
@@ -314,11 +375,11 @@
                 <p>
                   There are two APIs for defining tasks: the <strong>original
                   API</strong>, which uses a call to a
-                  <code>task</code> method to define one, and a <strong>newer,
-                  experimental API</strong> which relies simply on exported functions to
-                  define tasks — but the basic building block of both APIs is the Task.
+                  <code>task</code> method to define one, and an
+                  <strong>experimental API</strong> which relies simply on
+                  exported functions to define tasks — but the basic building
+                  block of both APIs is the Task.
                 </p>
-
 
 	    </section><!--//docs-intro-->
 
@@ -407,27 +468,45 @@
             <p>
               Use <code>desc</code> to add a string description of the task. If
               you add this description, the task will be visible when
-              you run <code>jake -T</code>. Any tasks that have no description
-              will be considered private, and won't be displayed in the list of
-              tasks with the <code>-T</code> flag (or its alias
-              <code>-ls</code>).
+              you run <code>jake -T</code>.
             </p>
+
+            <div class="callout-block callout-block-info">
+            <div class="content">
+                <h4 class="callout-title">
+                  <span class="callout-icon-holder mr-1">
+                    <i class="fas fa-info-circle"></i>
+                </span><!--//icon-holder-->
+                  Private tasks
+              </h4>
+              <p>
+                Tasks without a description (without a call to
+                <code>desc</code>) are considered private. They will not show up
+                when you run <code>jake -T</code>
+              </p>
+            </div><!--//content-->
+          </div><!--//callout-block-->
 
           </section><!--//section-->
 
-          <section class="docs-section" id="item-api-basic-examples">
-            <h2 class="section-heading">Basic examples</h2>
+          <section class="docs-section" id="item-api-task-examples">
+            <h2 class="section-heading">Task examples</h2>
 
-            <pre><code class="javascript hljs">let { task, desc } = require('jake');
+            <p>
+              <pre><code class="javascript hljs">let { task, desc } = require('jake');
 
-desc('This is the default task.');
-task('default', function () {
-  console.log('This is the default task.');
-  console.log('Jake will run this task if you run `jake` with no task specified.');
+desc('This is the foo task.');
+task('foo', function () {
+  console.log('This is the foo task.');
+});
+
+desc('This is the bar task.');
+task('foo', function () {
+  console.log('This is the bar task.');
 });
 
 desc('This async task has prerequisites.');
-task('hasPrereqs', ['foo', 'bar', 'baz'], async function () {
+task('hasPrereqs', ['foo', 'bar'], async function () {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       console.log('Ran some prereqs first.');
@@ -435,6 +514,7 @@ task('hasPrereqs', ['foo', 'bar', 'baz'], async function () {
     }, 2000);
   });
 });</code></pre>
+        </p>
 
           </section><!--//section-->
 
@@ -442,7 +522,7 @@ task('hasPrereqs', ['foo', 'bar', 'baz'], async function () {
             <h2 class="section-heading">Exported function tasks (experimental)</h2>
 
             <p>
-              Jake also supports a <strong>newer</strong>, experimental API that
+              Jake also supports an <strong>experimental</strong> API that
               will create tasks implicitly from any functions you export from
               your Jakefile. The name of the task will be the key you export the
               function with.
@@ -452,21 +532,24 @@ task('hasPrereqs', ['foo', 'bar', 'baz'], async function () {
               For example, with the following Jakefile:
             </p>
 
-            <pre><code class="javascript hljs">function foo() {}
-async function bar() {}
+            <p>
+              <pre><code class="javascript hljs">function foo() {}
+  async function bar() {}
 
-exports.foo = foo;
-exports.bar = bar</code></pre>
+  exports.foo = foo;
+  exports.bar = bar</code></pre>
+            </p>
 
-          <p>
-            Running <code>jake -T</code> wiil yield the following output:
-          </p>
+            <p>
+              Running <code>jake -T</code> wiil yield the following output:
+            </p>
 
-          <p>
-            <pre><code class="shell hljs">$ jake -T
+            <p>
+              <pre><code class="shell hljs">$ jake -T
 jake foo (Exported function task)
 jake bar (Exported function task)</code></pre>
-          </p>
+            </p>
+
           </section><!--//section-->
 
           <section class="docs-section" id="item-api-series-method">
@@ -489,7 +572,9 @@ jake bar (Exported function task)</code></pre>
               Use the <code>series</code> method like this:
             </p>
 
-            <pre><code class="javascript hljs">let { series } = require('jake');
+            <p>
+              <pre><code class="javascript hljs">let { series } = require('jake');
+
 
 function clean() {
   // Do pre-build cleanup here
@@ -506,6 +591,7 @@ async function _build() {
 exports.clean = clean;
 exports.lint = lint;
 exports.build = series(clean, lint, _build);</code></pre>
+            </p>
 
           </section><!--//section-->
 
@@ -709,7 +795,7 @@ rule(/\.\w{2,4}\.css$/, getSourceFilename, {async: true}, function () {
               <strong>task-specific arguments</strong>, and <strong>environment variables</strong>.
             </p>
 
-            <h3 class="section-heading">Task arguments</h3>
+            <h3>Task arguments</h3>
 
             <p>
               To pass arguments to a Jake task, enclose them in square braces,
@@ -775,7 +861,7 @@ task('awesome', function (a, b, c) {
             </div><!--//content-->
           </div><!--//callout-block-->
 
-            <h3 class="section-heading">Environment variables</h3>
+            <h3>Environment variables</h3>
 
             <p>
               Any parameters passed after the Jake task that contain an equals sign (=) will
