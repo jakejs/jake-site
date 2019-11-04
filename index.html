@@ -73,7 +73,7 @@
                       <span class="card-title-text">Overview</span>
                   </h5>
                   <div class="card-text">
-                    Jake is the JavaScript build tool for NodeJS. Jake has been
+                    Jake is a simple and flexible JavaScript build tool for NodeJS. Jake has been
                     around since the very early days of Node, and is full featured
                     and well tested.
                   </div>
@@ -91,9 +91,10 @@
                       <span class="card-title-text">Installation</span>
                   </h5>
                   <div class="card-text">
-                    Jake is primarily a CLI tool. You can install it globally,
-                    but you can also run it locally using <code>npx</code> or
-                    similar, or even embed it as a module in larger programs.
+                    Jake is a CLI tool. You can install it globally with
+                    <code>npm i -g jake</code>, or install it locally and run
+                    with <code>npx</code>.  You can even embed it as a module in
+                    larger programs.
                   </div>
                   <a class="card-link-mask" href="docs-page.html#item-overview-installation"></a>
                 </div><!--//card-body-->
@@ -111,7 +112,7 @@
                   <div class="card-text">
                     Tasks for Jake to run are defined in Jakefiles. A Jakefile
                     is just executable JavaScript. You can include whatever
-                    JavaScript you want in it.
+                    JS code you want in it.
                 </div>
                   <a class="card-link-mask" href="docs-page.html#item-overview-jakefiles"></a>
                 </div><!--//card-body-->
@@ -122,14 +123,14 @@
                 <div class="card-body">
                   <h5 class="card-title mb-3">
                     <span class="theme-icon-holder card-icon-holder mr-2">
-                        <i class="fas fa-tasks fa-fw"></i>
+                        <i class="fas fa-check-circle fa-fw"></i>
                       </span><!--//card-icon-holder-->
                       <span class="card-title-text">Tasks</span>
                   </h5>
                   <div class="card-text">
                   Tasks are the basic building block of
                   execution for Jake-based build processes. Tasks can have other
-                  tasks as prerequities, meaning those tasks
+                  tasks as <strong>prerequities</strong>, meaning those tasks
                   have to run before the current task can run.
                 </div>
                   <a class="card-link-mask" href="docs-page.html#item-api-tasks"></a>
@@ -141,16 +142,16 @@
                 <div class="card-body">
                   <h5 class="card-title mb-3">
                     <span class="theme-icon-holder card-icon-holder mr-2">
-                        <i class="fas fa-project-diagram"></i>
+                        <i class="fas fa-tasks fa-fw"></i>
                       </span><!--//card-icon-holder-->
-                      <span class="card-title-text">Rules</span>
+                      <span class="card-title-text">Concurrent tasks</span>
                   </h5>
                   <div class="card-text">
-                    When you add a filename as a prerequisite for a task, but there is
-                    not a file-task defined for it, Jake can create file-tasks on the fly
-                    from Rules.
+                    Jake lets you run multiple asynchronous tasks at once,
+                    by making a task's prerequisites concurrent. You can control
+                    the amount of concurrency, with a passed option.
                 </div>
-                  <a class="card-link-mask" href="docs-page.html#item-api-rules"></a>
+                  <a class="card-link-mask" href="docs-page.html#item-advanced-usage-concurrent-tasks"></a>
                 </div><!--//card-body-->
               </div><!--//card-->
             </div><!--//col-->
@@ -177,16 +178,36 @@
                 <div class="card-body">
                   <h5 class="card-title mb-3">
                     <span class="theme-icon-holder card-icon-holder mr-2">
+                        <i class="fas fa-project-diagram"></i>
+                      </span><!--//card-icon-holder-->
+                      <span class="card-title-text">Rules</span>
+                  </h5>
+                  <div class="card-text">
+                    When you use a filename as a prerequisite for a task, but there is
+                    not a file-task defined for it, Jake can create file-tasks on the fly
+                    from Rules.
+                </div>
+                  <a class="card-link-mask" href="docs-page.html#item-advanced-usage-programmatic-tasks"></a>
+                </div><!--//card-body-->
+              </div><!--//card-->
+            </div><!--//col-->
+            <div class="col-12 col-lg-4 py-3">
+              <div class="card shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title mb-3">
+                    <span class="theme-icon-holder card-icon-holder mr-2">
                         <i class="fas fa-code"></i>
                       </span><!--//card-icon-holder-->
                       <span class="card-title-text">Programmatic tasks</span>
                   </h5>
                   <div class="card-text">
-                    Jake supports the ability to run a task from within another task.  The
-                    <code>invoke</code> method will run the desired task, along with its
-                    prerequisites.
+                    The <code>invoke</code> method allows you to run a task,
+                    along with its prerequisites, from inside another running
+                    task. This, along with the <code>execute</code> and
+                    <code>reenable</code> methods, make Jake infinitely
+                    programmable.
                 </div>
-                  <a class="card-link-mask" href="docs-page.html#item-advanced-usage-programmatic-tasks"></a>
+                  <a class="card-link-mask" href="docs-page.html#item-advanced-usage-modularizing"></a>
                 </div><!--//card-body-->
               </div><!--//card-->
             </div><!--//col-->
@@ -204,22 +225,6 @@
                     directory in your project, and load them (using require) after loading your main
                     Jakefile.
                 </div>
-                  <a class="card-link-mask" href="docs-page.html#item-advanced-usage-modularizing"></a>
-                </div><!--//card-body-->
-              </div><!--//card-->
-            </div><!--//col-->
-            <div class="col-12 col-lg-4 py-3">
-              <div class="card shadow-sm">
-                <div class="card-body">
-                  <h5 class="card-title mb-3">
-                    <span class="theme-icon-holder card-icon-holder mr-2">
-                        <i class="fas fa-tools"></i>
-                      </span><!--//card-icon-holder-->
-                      <span class="card-title-text">Utility tasks</span>
-                  </h5>
-                  <div class="card-text">
-                    Jake ships with a number of built-in utility tasks that make the repetitive work of building and releasing easier.
-                  </div>
                   <a class="card-link-mask" href="docs-page.html#section-utility-tasks"></a>
                 </div><!--//card-body-->
               </div><!--//card-->
