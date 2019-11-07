@@ -225,6 +225,8 @@
                 </tr>
                 <tr>
                   <th class="theme-bg-light">
+                    -t
+                    <span class="faded">/</span>
                     -T
                     <span class="faded">/</span>
                     -ls
@@ -248,7 +250,7 @@
                 </tr>
                 <tr>
                   <th class="theme-bg-light">
-                    -t
+                    -s
                     <span class="faded">/</span>
                     --trace
                   </th>
@@ -334,14 +336,14 @@ task('otherTask', ['default'], function () {
             <h2 class="section-heading">Showing tasks</h2>
 
             <p>
-              Passing <code>jake</code> the <code>-T</code> or
-              <code>--tasks</code> flag (or the alias <code>-ls</code>) will
+              Passing <code>jake</code> the <code>-t</code> or
+              <code>--tasks</code> flag (or the aliases <code>-T</code> / <code>-ls</code>) will
               display the full list of tasks available in a Jakefile, along with
               their descriptions:
             </p>
 
             <p>
-              <pre><code class="shell hljs">$ jake -T
+              <pre><code class="shell hljs">$ jake -t
 jake default       # This is the default task.
 jake asdf          # This is the asdf task.
 jake concat.txt    # File task, concatenating two files together
@@ -352,11 +354,11 @@ jake foo:fonebone  # This the foo:fonebone task</code></pre>
             </p>
 
             <p>
-              Setting a value for -T/--tasks will filter the list by that value:
+              Setting a value for -t/--tasks will filter the list by that value:
             </p>
 
             <p>
-              <pre><code>$ jake -T foo
+              <pre><code>$ jake -t foo
 jake foo:bar       # This the foo:bar task
 jake foo:fonebone  # This the foo:fonebone task</code></pre>
             </p>
@@ -470,7 +472,7 @@ jake foo:fonebone  # This the foo:fonebone task</code></pre>
             <p>
               Use <code>desc</code> to add a string description of the task. If
               you add this description, the task will be visible when
-              you run <code>jake -T</code>.
+              you run <code>jake -t</code>.
             </p>
 
             <div class="callout-block callout-block-info">
@@ -484,7 +486,7 @@ jake foo:fonebone  # This the foo:fonebone task</code></pre>
               <p>
                 Tasks without a description (without a call to
                 <code>desc</code>) are considered private. They will not show up
-                when you run <code>jake -T</code>
+                when you run <code>jake -t</code>
               </p>
             </div><!--//content-->
           </div><!--//callout-block-->
@@ -543,11 +545,11 @@ task('hasPrereqs', ['foo', 'bar'], async function () {
             </p>
 
             <p>
-              Running <code>jake -T</code> wiil yield the following output:
+              Running <code>jake -t</code> wiil yield the following output:
             </p>
 
             <p>
-              <pre><code class="shell hljs">$ jake -T
+              <pre><code class="shell hljs">$ jake -t
 jake foo (Exported function task)
 jake bar (Exported function task)</code></pre>
             </p>
