@@ -1364,6 +1364,7 @@ fonebone-v0.1.2112.tar.gz </code></pre>
               <li><code>archiveNoBaseDir</code> {Boolean=false} Simple option for performing the archive on the contents of the directory instead of the directory itself</li>
               <li><code>archiveChangeDir</code> {String=null} Equivalent to the '-C' command for the <code>tar</code> and <code>jar</code> commands. (&quot;Change to this directory before adding files.&quot;)</li>
               <li><code>archiveContentDir</code> {String=null} Specifies the files and directories to include in the package-archive. If unset, this will default to the main package directory -- i.e., name + version.</li>
+              <li><code>archiveRootDir</code> {String=null} If set, tar archives put every file under a single top-level directory with this name instead of name + version, and contain only file entries. Set it to 'package' to create tarballs the NPM registry accepts (PublishTask does this by default). Takes precedence over <code>archiveNoBaseDir</code>, <code>archiveChangeDir</code>, and <code>archiveContentDir</code> for tar archives.</li>
             </ul>
           </section><!--//section-->
 
@@ -1422,13 +1423,34 @@ console.log(list.toArray());</code></pre>
 
               <ol>
                 <li>Bump the version number in your package.json</li>
-                <li>Commit change in git, push it to GitHub</li>
-                <li>Create a git tag for the version</li>
-                <li>Push the tag to GitHub</li>
+                <li>Commit the change in git, and create a git tag for the version</li>
                 <li>Package the new version of your project</li>
                 <li>Publish it to NPM</li>
                 <li>Clean up the package</li>
+                <li>Push the commit and the tag to GitHub</li>
               </ol>
+
+              <p>
+                The commit and tag are pushed only after the publish succeeds, so a
+                failed publish doesn't leave a public tag without a matching release.
+                If packaging or publishing fails, Jake prints the commands to retry the
+                release (<code>jake publishExisting</code>, then push) or to abandon
+                the version.
+              </p>
+
+              <p>
+                The publish command runs in your terminal, so NPM can prompt for
+                two-factor authentication (a one-time password or a browser login).
+                Run <code>jake publish</code> from a terminal, logged in with
+                <code>npm login</code>.
+              </p>
+
+              <p>
+                The published archive,
+                <code>pkg/&lt;name&gt;-v&lt;version&gt;.tar.gz</code>, puts every file
+                under a top-level <code>package/</code> directory, as the NPM registry
+                requires.
+              </p>
 
               <p>
                 If you want to publish to a private NPM repository or some other
